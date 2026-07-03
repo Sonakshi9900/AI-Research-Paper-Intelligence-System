@@ -1,4 +1,4 @@
-# AI Research Paper Intelligence System
+# AI Research Power Intelligence System
 
 An NLP-powered research assistant that enables semantic search, automatic summarization, keyword extraction, and topic clustering across machine learning research papers.
 
@@ -86,8 +86,8 @@ Sentence-BERT Embeddings ──► FAISS Index
 ## Installation
 
 ```bash
-git clone https://github.com/<your-username>/ai-research-paper-intelligence.git
-cd ai-research-paper-intelligence
+git clone https://github.com/Sonakshi9900/AI-Research-Power-Intelligence-System.git
+cd AI-Research-Power-Intelligence-System
 pip install -r requirements.txt
 ```
 
@@ -159,4 +159,3 @@ clusters = kmeans.fit_predict(embedding)
 - Add citation-graph analysis to surface influential papers
 - Introduce query logging and analytics
 
----
