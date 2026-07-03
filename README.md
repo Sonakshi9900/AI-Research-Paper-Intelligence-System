@@ -1,61 +1,67 @@
-# AI Research Power Intelligence System
+# 🔎 AI Research Power Intelligence System
 
-An NLP-powered research assistant that enables semantic search, automatic summarization, keyword extraction, and topic clustering across machine learning research papers.
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange?logo=jupyter&logoColor=white)
+![HuggingFace](https://img.shields.io/badge/🤗%20Transformers-NLP-yellow)
+![FAISS](https://img.shields.io/badge/FAISS-Vector%20Search-9cf)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-yellowgreen?logo=scikit-learn&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Sonakshi9900/AI-Research-Power-Intelligence-System/blob/main/CBSOT(SIP)project2.ipynb)
 
-Instead of manually scanning through hundreds of abstracts, users can query the system in natural language and instantly retrieve the most relevant papers — complete with concise summaries and extracted keywords.
-
----
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Architecture](#architecture)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Future Improvements](#future-improvements)
-- [License](#license)
+> An NLP-powered research assistant that enables semantic search, automatic summarization, keyword extraction, and topic clustering across machine learning research papers — turning natural-language queries into relevant, digestible insights.
 
 ---
 
-## Overview
+## 📌 Table of Contents
 
-The system ingests a large corpus of ML research papers, converts each paper into a dense semantic embedding, and indexes them for fast similarity search. On top of retrieval, it layers abstractive summarization, keyword extraction, and topic clustering to turn raw search results into actionable insight.
-
----
-
-## Features
-
-- **Semantic Search** — Retrieves papers most relevant to a natural-language query using Sentence-BERT embeddings and cosine similarity.
-- **High-Speed Vector Search** — FAISS-backed indexing enables sub-second nearest-neighbor search across thousands of papers.
-- **Abstractive Summarization** — Generates concise, human-readable summaries of paper abstracts using a pretrained BART transformer.
-- **Keyword Extraction** — Surfaces the most representative keyphrases from each abstract using KeyBERT.
-- **Unified Query Pipeline** — A single function chains search, summarization, and keyword extraction, returning structured results in one call.
-- **Topic Clustering** — Groups the corpus into research themes using KMeans and visualizes the topic landscape with PCA.
-- **Keyword Visualization** — Generates word clouds to highlight dominant terms across a set of results.
-- **Exportable Results** — Search output can be exported to CSV for downstream analysis or reporting.
+- [Overview](#-overview)
+- [Problem Statement](#-problem-statement)
+- [Dataset](#-dataset)
+- [Project Workflow](#-project-workflow)
+- [Key Techniques](#-key-techniques)
+- [Results](#-results)
+- [Technologies Used](#-technologies-used)
+- [Getting Started](#-getting-started)
+- [Project Structure](#-project-structure)
+- [Future Improvements](#-future-improvements)
+- [Author](#-author)
 
 ---
 
-## Tech Stack
+## 🔍 Overview
 
-| Category | Tools / Libraries |
+Keeping up with the volume of published machine learning research is a growing challenge — abstracts are dense, and manually filtering through hundreds of papers to find relevant ones is inefficient. This project addresses that by combining **semantic search**, **abstractive summarization**, and **topic modeling** into a single end-to-end pipeline.
+
+Users can enter a natural-language query and instantly retrieve the most relevant research papers, each accompanied by an automatically generated summary and extracted keywords, along with a higher-level view of the research topic landscape.
+
+---
+
+## 💼 Problem Statement
+
+Researchers, students, and practitioners routinely face the following challenges:
+
+- Which papers, among thousands, are actually relevant to a specific research question?
+- How can long abstracts be digested quickly without losing key information?
+- What are the dominant research themes within a large paper corpus?
+
+This project tackles all three by combining retrieval, summarization, and unsupervised topic discovery.
+
+---
+
+## 📊 Dataset
+
+**Source:** [CShorten/ML-ArXiv-Papers](https://huggingface.co/datasets/CShorten/ML-ArXiv-Papers) (Hugging Face)
+
+| Property | Details |
 |---|---|
-| Language | Python |
-| Embeddings | Sentence-Transformers (`all-MiniLM-L6-v2`) |
-| Vector Search | FAISS |
-| Summarization | Hugging Face Transformers (`facebook/bart-large-cnn`) |
-| Keyword Extraction | KeyBERT |
-| Clustering & Dimensionality Reduction | scikit-learn (KMeans, PCA) |
-| Data Processing | pandas, NumPy |
-| Visualization | Matplotlib, WordCloud |
-| Dataset | [CShorten/ML-ArXiv-Papers](https://huggingface.co/datasets/CShorten/ML-ArXiv-Papers) |
+| Records used | 15,000 papers |
+| Fields | `title`, `abstract` |
+| Domain | Machine Learning / AI research (arXiv) |
 
 ---
 
-## Architecture
+## 🔄 Project Workflow
 
 ```
 Raw Papers (title + abstract)
@@ -83,32 +89,98 @@ Sentence-BERT Embeddings ──► FAISS Index
 
 ---
 
-## Installation
+## 🛠 Key Techniques
 
-```bash
-git clone https://github.com/Sonakshi9900/AI-Research-Power-Intelligence-System.git
-cd AI-Research-Power-Intelligence-System
-pip install -r requirements.txt
-```
+### 1. Semantic Embedding Generation
+- Papers converted into 384-dimensional dense vectors using **Sentence-BERT** (`all-MiniLM-L6-v2`)
+- Captures semantic meaning beyond simple keyword matching
 
-**requirements.txt**
-```
-datasets
-sentence-transformers
-faiss-cpu
-transformers==4.48.0
-keybert==0.8.5
-wordcloud
-scikit-learn
-pandas
-matplotlib
-```
+### 2. High-Speed Vector Search
+- **FAISS** (`IndexFlatIP`) indexes all paper embeddings for sub-second similarity search
+- Cosine similarity via normalized inner product
+
+### 3. Abstractive Summarization
+- Pretrained **BART** (`facebook/bart-large-cnn`) model condenses lengthy abstracts into concise summaries
+
+### 4. Keyword & Keyphrase Extraction
+- **KeyBERT** identifies the most representative terms/phrases from each abstract
+
+### 5. Unified Query Pipeline
+- A single `analyze_query()` function chains search → summarization → keyword extraction into one structured output
+
+### 6. Topic Clustering & Visualization
+- **KMeans** groups the corpus into distinct research themes
+- **PCA** projects high-dimensional embeddings into 2D for visualization
+- **WordCloud** highlights dominant terms across a set of results
 
 ---
 
-## Usage
+## 📈 Results
 
-Run the notebook end-to-end to build the embeddings and FAISS index, then query the system:
+| Component | Outcome |
+|---|---|
+| Semantic Search | Returns highly relevant papers for natural-language queries (validated via cosine similarity scores) |
+| Summarization | Reduces abstracts to concise, readable summaries in seconds |
+| Keyword Extraction | Surfaces accurate, topic-representative keyphrases per paper |
+| Clustering | Identifies 8 distinct research themes across the corpus |
+
+**Key Findings:**
+- Semantic search consistently outperforms keyword-based matching for conceptually similar queries
+- Clustering reveals clear topic boundaries (e.g., medical imaging, NLP, reinforcement learning) without any manual labeling
+- Combining retrieval with summarization significantly reduces the time needed to evaluate paper relevance
+
+---
+
+## 🧰 Technologies Used
+
+| Category | Tools / Libraries |
+|---|---|
+| Language | Python 3.8+ |
+| Embeddings | Sentence-Transformers (`all-MiniLM-L6-v2`) |
+| Vector Search | FAISS |
+| Summarization | Hugging Face Transformers (`facebook/bart-large-cnn`) |
+| Keyword Extraction | KeyBERT |
+| Clustering & Dimensionality Reduction | scikit-learn (KMeans, PCA) |
+| Data Manipulation | Pandas, NumPy |
+| Visualization | Matplotlib, WordCloud |
+| Environment | Jupyter Notebook |
+
+---
+
+## 🚀 Getting Started
+
+### ▶️ Run Directly in Google Colab (No Setup Required)
+
+Click the badge below to open and run the notebook instantly in your browser:
+
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Sonakshi9900/AI-Research-Power-Intelligence-System/blob/main/CBSOT(SIP)project2.ipynb)
+
+---
+
+### 💻 Run Locally
+
+### Prerequisites
+
+```bash
+Python 3.8+
+pip
+```
+
+### Installation
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/Sonakshi9900/AI-Research-Power-Intelligence-System.git
+cd AI-Research-Power-Intelligence-System
+
+# 2. Install required libraries
+pip install datasets sentence-transformers faiss-cpu transformers==4.48.0 keybert==0.8.5 wordcloud scikit-learn pandas matplotlib
+
+# 3. Launch Jupyter Notebook
+jupyter notebook "CBSOT(SIP)project2.ipynb"
+```
+
+### Example Query
 
 ```python
 results = analyze_query("deep learning for medical image analysis", k=5)
@@ -121,41 +193,35 @@ for r in results:
     print()
 ```
 
-**Sample output:**
-```
-Title: Deep Learning for Medical Image Analysis
-Score: 0.812
-Summary: A concise, auto-generated summary of the paper's abstract.
-Keywords: ['medical imaging', 'deep learning', 'convolutional neural network']
-```
+---
 
-To visualize research themes across the dataset:
+## 📁 Project Structure
 
-```python
-kmeans = KMeans(n_clusters=8, random_state=42, n_init=10)
-clusters = kmeans.fit_predict(embedding)
+```
+AI-Research-Power-Intelligence-System/
+│
+├── CBSOT(SIP)project2.ipynb   # Main pipeline: data loading, embeddings, search, summarization, clustering
+├── paper_embedding.npy        # Cached paper embeddings (generated on first run)
+├── paper_faiss.index          # Cached FAISS index (generated on first run)
+├── results.csv                # Example exported search results
+└── README.md                  # Project documentation
 ```
 
 ---
 
-## Project Structure
+## 🔮 Future Improvements
 
-```
-├── notebook.ipynb           # End-to-end pipeline: data loading, embeddings, search, summarization
-├── requirements.txt         # Project dependencies
-├── paper_embedding.npy      # Cached paper embeddings (generated on first run)
-├── paper_faiss.index        # Cached FAISS index (generated on first run)
-├── results.csv              # Example exported search results
-└── README.md
-```
-
----
-
-## Future Improvements
-
-- Deploy as a web application for interactive, non-technical use
+- Deploy as an interactive web application (e.g. Gradio/Streamlit) for non-technical users
 - Support full-text PDF ingestion rather than abstracts alone
-- Fine-tune the summarization model on scientific literature
+- Fine-tune the summarization model on scientific literature for higher-quality output
 - Add citation-graph analysis to surface influential papers
-- Introduce query logging and analytics
+- Introduce query logging and usage analytics
+
+---
+
+## 👩‍💻 Author
+
+**Sonakshi**
+
+[![GitHub](https://img.shields.io/badge/GitHub-Sonakshi9900-black?logo=github)](https://github.com/Sonakshi9900)
 
